@@ -1,41 +1,70 @@
-﻿namespace Employee{
+﻿string vame = "Abhi";
+string dname = "promact";
+double ed = 1;
+//event call
+    var idMail = new IdMail();
+    var idName = new IdName();
+    var idDeptName = new IdDeptName();
+    var x = new Employee();
 
-    class Program {
+//event connection
+    x.IdInvoked += idMail.OnIdInvoked;
+    x.NameInvoked += idName.OnNameInvoked;
+    x.DeptNameInvoked += idDeptName.OnDeptNameInvoked;
 
-        static  void Main(String[] args){
-            var employees = new List<Employees>();
-            System.Console.WriteLine("Enter number of employees");
-            var numbrofempl = int.Parse(Console.ReadLine()) ;
+//overloaded method
+    x.GetId(ed);
+    x.GetName(vame);
+    x.GetDepartmentName(dname);
 
-            while (numbrofempl != 0){
-               
-                Console.WriteLine("Enter Id: ") ;
-                var Id = int.Parse(Console.ReadLine()) ;
-                System.Console.WriteLine("name : ") ; 
-                var name = Console.ReadLine() ;
-                System.Console.WriteLine("Department Name: ") ;
-                var departmentName = Console.ReadLine() ;
-            
-                if( name != null && departmentName != null){
-                var sample = new Employees(Id,name,departmentName ) ;
-                employees.Add(sample) ;  
-                sample.ongetid += Events.ongetid;
-                sample.ongetname += Events.ongetname;
-                sample.ongetdepartmentname += Events.ongetdepartmentname ; 
+//input of the data and related calls to the methods 
+while (true)
+{
+    Console.Write("ENTER NEW NAME: ");
+    string name = Console.ReadLine();
+    Console.Write("ENTER NEW  DEPT. NAME: ");
+    string Deptname = Console.ReadLine();
+    Console.Write("ENTER ID IN NUMBER: ");
+    double Eid = Convert.ToDouble(Console.ReadLine());
+    //condition for multiple inputs at once
+    if (name == ""  || Deptname == "")
+    {
+        Console.WriteLine("any of the feild is empty ");
+        break;
+    }
 
-                numbrofempl--;         
-                    }            
-            }
+    //cunst. call
+    Employee e = new Employee(name, Deptname, Eid);
 
-            foreach(var employee in employees){
-                System.Console.WriteLine() ;
-                System.Console.WriteLine($" Employee Id: {employee.GetId()}") ;
-                System.Console.WriteLine($"Name:{employee.GetName()}") ;
-                System.Console.WriteLine($"DepartmentName: {employee.GetDepartmentName()}") ;
-                System.Console.WriteLine() ;
-            }   
-        }
-    
-     
+    Console.WriteLine("id is : " + e.GetId());
+    Console.WriteLine("name is : " + e.GetName());
+    Console.WriteLine("dept. is : " + e.GetDepartmentName());
+}
+
+//event classes
+public class IdMail
+{
+    public void OnIdInvoked(object source, EventArgs x)
+    {
+        Console.WriteLine("GetId method is called...");
     }
 }
+public class IdName
+{
+    public void OnNameInvoked(object source, EventArgs y)
+    {
+        Console.WriteLine("GetName method is called...");
+    }
+}
+public class IdDeptName
+{
+    public void OnDeptNameInvoked(object source, EventArgs z)
+    {
+        Console.WriteLine("GetDeptName method is called...");
+    }
+}
+
+
+
+
+

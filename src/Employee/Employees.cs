@@ -1,65 +1,84 @@
+public class Employee
+ {
+     //variables
+     private string name;
+     private double Eid;
+     private string Deptname;
 
-namespace Employee{
-    class Employees{
+     // delegate
+     public delegate void IdInvokeEventHandler(object source, EventArgs args);
+     public delegate void NameInvokeEventHandler(object source, EventArgs args);
+     public delegate void DeptNameInvokeEventHandler(object source, EventArgs args);
 
-        public event MethodcallDelegate? ongetid;
-        
-        public event MethodcallDelegate? ongetname;
-       
-        public event MethodcallDelegate? ongetdepartmentname;
-       
-        public Employees(int Id, string name, string departmentName)
-        {   
-            this.Id = Id;
-            this.name = name ;
-            this.departmentName = departmentName;
-        }
 
-        private int Id;
+    // event
 
-        public int GetId()
-        {   if(ongetid != null ){
-              ongetid(this, new EventArgs()) ;
-        }
-            return Id;
-        }
+    public event IdInvokeEventHandler IdInvoked;
+    public event NameInvokeEventHandler NameInvoked;
+    public event DeptNameInvokeEventHandler DeptNameInvoked;
 
-        private string name;
+    protected virtual void OnIdInvoked()
+    {      
+            IdInvoked(this, EventArgs.Empty);       
+    }
+    protected virtual void OnNameInvoked()
+    {      
+            NameInvoked(this, EventArgs.Empty);      
+    }
+    protected virtual void OnDeptNameInvoked()
+    {      
+            DeptNameInvoked(this, EventArgs.Empty);       
+    }
 
-        public string GetName()
-        {   if(ongetname != null){
-            ongetname(this, new EventArgs()) ;
-        }
-            return name;
-        }
+    // constructor
 
-        private string departmentName;
+    public Employee (string name , string Deptname, double Eid)
+    {
+        this.name = name;
+        this.Deptname = Deptname;
+        this.Eid = Eid;
+    }
 
-        public string GetDepartmentName()
-        {   if(ongetdepartmentname != null) {
-            ongetdepartmentname(this, new EventArgs()) ;
-                    }
-            return departmentName;
-        }
-
-        public void employeeUpdate(int Id,string name,string departmentName){
-            this.Id = Id ;
-            this.name = name ;
-            this.departmentName = departmentName ;    
-        }
-
-        public void employeeUpdate(string name,int Id,string departmentName){
-            this.Id = Id ;
-            this.name = name ;
-            this.departmentName = departmentName ;
-        }
-
-        public void employeeUpdate(string departmentName,string name,int Id){
-            this.Id = Id ;
-            this.name = name ;
-            this.departmentName = departmentName ;
-        }
+    public Employee(string name)
+    {
+        this.name = name;
+    }
+    public Employee()
+    {
 
     }
 
-}
+    //methods
+
+    public string GetName()
+    {
+        return name;
+        OnNameInvoked();
+    }
+    public string GetName(string name)
+    {
+        this.name = name; 
+        return name;
+    }
+    public string GetDepartmentName()
+    {
+        return Deptname;
+        OnDeptNameInvoked();
+    }
+    public string GetDepartmentName(string Deptname)
+    {
+        this.Deptname = Deptname;
+        return Deptname;
+    }
+    public double GetId()
+    {
+        return Eid;
+        OnIdInvoked();
+    }
+    public double GetId(double Eid)
+    {
+        this.Eid = Eid;
+        return Eid;
+    }
+
+} 
